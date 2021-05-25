@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ArticleController!{% endblock %}
+
+{% block body %}
+    <div class="container">
+            <h2>Creation d'un article</h2>
+            {{ form_start(form) }}
+
+            {{form_row(form) }}
+            
+            <input type="submit" class="btn btn-primary float-right mt-2" name="valider" value="enregistrer" formnovalidate/>
+        {{form_end(form) }}
+    </div>
+{% endblock %}

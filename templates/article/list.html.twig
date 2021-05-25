@@ -1,0 +1,34 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="container">
+        <h2 class="text-center mt-4">Liste des articles</h2>
+        <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <th>titre</th>
+            <th>description</th>
+            <th>date creation</th>
+            <th>Action</th>
+        </thead>
+
+        <tbody>
+            {% for article in articles %}
+                <tr>
+                    <td>{{article.titre}}</td>
+                    <td>{{article.description}}</td>
+                    <td>{{article.createdAt | date("m/d/Y") }}</td>
+                    <td>
+                        <a href="{{ path('article_edit',{'id':article.id}) }}">
+                            <button type="button" class="btn btn-sm btn-primary">modifier</button>
+                        </a>
+
+                        <a href="{{ path('delete_article',{'id':article.id}) }}">
+                            <button type="button" class="btn btn-sm btn-danger">supprimer</button>
+                        </a>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        </table>
+    </div>
+{% endblock %}
