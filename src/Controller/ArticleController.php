@@ -35,8 +35,18 @@ class ArticleController extends AbstractController
             $this->em->persist($article);
             $this->em->flush();
             
-            return $this->redirectToRoute("article_all");
+            return $this->redirectToRoute("article_all",[],Response::HTTP_SEE_OTHER);
         }
+        
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $response = new Response();
+            $response->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
+
+            return $this->render('article/index.html.twig', [
+                'form' => $form->createView()
+            ],$response);
+        }
+
         return $this->render('article/index.html.twig', [
             'form' => $form->createView()
         ]);
@@ -79,7 +89,15 @@ class ArticleController extends AbstractController
             $article = $form_edit->getData();
 
             $this->em->flush();
-            return $this->redirectToRoute("article_all");
+            return $this->redirectToRoute("article_all",[], Response::HTTP_SEE_OTHER);
+        }
+
+        if ($form_edit->isSubmitted() && !$form_edit->isValid()){
+            $response = new Response();
+            $response->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
+            return $this->render("article/edit.html.twig",[
+                'form_edit' => $form_edit->createView()
+            ],$response);
         }
 
         return $this->render("article/edit.html.twig",[

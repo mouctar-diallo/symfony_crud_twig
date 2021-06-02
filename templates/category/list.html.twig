@@ -12,6 +12,7 @@
     <thead>
         <th>id</th>
         <th>libelle</th>
+        <th>Action</th>
     </thead>
 
     <tbody>
@@ -19,6 +20,11 @@
             <tr>
                 <td>{{c.id}}</td>
                 <td>{{c.libelle}}</td>
+                <td>
+                    <a href="{{ path('category_edit', {'id': c.id })}}">
+                        <button type="button" class="btn btn-sm btn-primary">modifier</button>
+                    </a>
+                </td>
             </tr>
         {% endfor %}
     </tbody>

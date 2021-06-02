@@ -19,7 +19,7 @@
                 <label class="control-label">{{ form_label( form_edit.created_at)}}</label>
                 {{ form_widget(form_edit.created_at,{'attr': {'class': 'form-control'}})}}
             </div>
-            <button class="btn btn-success float-right">modifier</button>
+            <button class="btn btn-success float-right" formnovalidate>modifier</button>
         {{form_end(form_edit) }}
     </div>
 {% endblock %}

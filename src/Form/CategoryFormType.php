@@ -13,7 +13,9 @@ class CategoryFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('libelle',TextType::class)
+            ->add('libelle',TextType::class,[
+                'empty_data' => ''
+            ])
         ;
     }
 

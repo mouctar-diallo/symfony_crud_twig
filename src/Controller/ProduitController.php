@@ -34,8 +34,19 @@ class ProduitController extends AbstractController
 
             $this->em->persist($produit);
             $this->em->flush();
-            return $this->redirectToRoute("product_all");
+            return $this->redirectToRoute("product_all", [], Response::HTTP_SEE_OTHER);
         }
+        /*en utilisant turbo on a besoin de renvoyer un status code 422 pour 
+           que la validation formulaire marche */
+        if ($form->isSubmitted() && !$form->isValid()) {
+            $response = new Response();
+            $response->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
+            return $this->render('produit/create.html.twig', [
+                'form' => $form->createView(),
+            ], $response);
+        }   
+        
+
         return $this->render('produit/create.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -64,14 +75,21 @@ class ProduitController extends AbstractController
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $product = $form->getData();
-
+            
             $this->em->flush();
+            return $this->redirectToRoute("product_all",[], Response::HTTP_SEE_OTHER);
+        }
 
-            return $this->redirectToRoute("product_all");
+        if($form->isSubmitted() && !$form->isValid()) {
+            $response = new Response();
+            $response->setStatusCode(Response::HTTP_UNPROCESSABLE_ENTITY);
+            return $this->render('produit/edit.html.twig', [
+                'form' => $form->createView(), 
+            ],$response);
         }
 
         return $this->render('produit/edit.html.twig',[
-            'form' => $form->createView(), 
+            'form' => $form->createView()
         ]);
     }
 
@@ -87,7 +105,4 @@ class ProduitController extends AbstractController
             return $this->redirectToRoute('product_all');
         }
     }
-
-
-
 }

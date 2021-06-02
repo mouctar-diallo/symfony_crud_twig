@@ -14,8 +14,12 @@ class ArticleFormType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('titre', TextType::class)
-            ->add('description', TextType::class)
+            ->add('titre', TextType::class,[
+                'empty_data' => ''
+            ])
+            ->add('description', TextType::class,[
+                'empty_data' => ''
+            ])
             ->add('created_at',DateType::class, [
                 'widget' => 'single_text'
             ])
